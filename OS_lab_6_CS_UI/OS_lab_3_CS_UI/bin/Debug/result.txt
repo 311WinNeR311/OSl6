@@ -1,0 +1,29 @@
+Folders:
+$Recycle.Bin
+Blade and Soul
+Documents and Settings
+Intel
+logs
+oem
+PerfLogs
+Portable
+Program Files
+Program Files (x86)
+ProgramData
+Recovery
+SQLServer2016Media
+System Volume Information
+temp
+Users
+Windows
+
+Files:
+CPUID HWMonitor.lnk
+GitHub Desktop.lnk
+hiberfil.sys
+LibreOffice 5.4.lnk
+Oracle VM VirtualBox.lnk
+pagefile.sys
+swapfile.sys
+TeamViewer 12.lnk
+
