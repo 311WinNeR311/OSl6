@@ -1,29 +1,47 @@
 Folders:
-$Recycle.Bin
-Blade and Soul
-Documents and Settings
-Intel
-logs
-oem
-PerfLogs
-Portable
-Program Files
-Program Files (x86)
-ProgramData
-Recovery
-SQLServer2016Media
-System Volume Information
-temp
-Users
-Windows
+OSl4-master\.vs\OS_lab_3_CS_UI\v15
+OSl4-master\.vs\OS_lab_3_CS_UI
+OSl4-master\.vs
+OSl4-master\OS_lab_3_CS_UI\bin\Debug
+OSl4-master\OS_lab_3_CS_UI\bin
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\TempPE
+OSl4-master\OS_lab_3_CS_UI\obj\Debug
+OSl4-master\OS_lab_3_CS_UI\obj
+OSl4-master\OS_lab_3_CS_UI\Properties
+OSl4-master\OS_lab_3_CS_UI
+OSl4-master
 
 Files:
-CPUID HWMonitor.lnk
-GitHub Desktop.lnk
-hiberfil.sys
-LibreOffice 5.4.lnk
-Oracle VM VirtualBox.lnk
-pagefile.sys
-swapfile.sys
-TeamViewer 12.lnk
+OSl4-master\.vs\OS_lab_3_CS_UI\v15\.suo
+OSl4-master\OS_lab_3_CS_UI\bin\Debug\files.txt
+OSl4-master\OS_lab_3_CS_UI\bin\Debug\folders.txt
+OSl4-master\OS_lab_3_CS_UI\bin\Debug\OS_lab_3_CS_UI.exe
+OSl4-master\OS_lab_3_CS_UI\bin\Debug\OS_lab_3_CS_UI.exe.config
+OSl4-master\OS_lab_3_CS_UI\bin\Debug\OS_lab_3_CS_UI.pdb
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\CoreCompileInputs.cache
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\DesignTimeResolveAssemblyReferences.cache
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\OS_lab_3_CS_UI.csproj.FileListAbsolute.txt
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\OS_lab_3_CS_UI.csproj.GenerateResource.Cache
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\OS_lab_3_CS_UI.csprojResolveAssemblyReference.cache
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\OS_lab_3_CS_UI.exe
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\OS_lab_3_CS_UI.Form1.resources
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\OS_lab_3_CS_UI.pdb
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\OS_lab_3_CS_UI.Properties.Resources.resources
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+OSl4-master\OS_lab_3_CS_UI\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
+OSl4-master\OS_lab_3_CS_UI\Properties\AssemblyInfo.cs
+OSl4-master\OS_lab_3_CS_UI\Properties\Resources.Designer.cs
+OSl4-master\OS_lab_3_CS_UI\Properties\Resources.resx
+OSl4-master\OS_lab_3_CS_UI\Properties\Settings.Designer.cs
+OSl4-master\OS_lab_3_CS_UI\Properties\Settings.settings
+OSl4-master\OS_lab_3_CS_UI\App.config
+OSl4-master\OS_lab_3_CS_UI\Form1.cs
+OSl4-master\OS_lab_3_CS_UI\Form1.Designer.cs
+OSl4-master\OS_lab_3_CS_UI\Form1.resx
+OSl4-master\OS_lab_3_CS_UI\OS_lab_3_CS_UI.csproj
+OSl4-master\OS_lab_3_CS_UI\Program.cs
+OSl4-master\OS_lab_3_CS_UI.sln
+OSl4-master\README.md
 

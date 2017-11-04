@@ -10,13 +10,13 @@ namespace OS_lab_3_CS_UI
 {
     public partial class Form1 : Form
     {
+        private List<string> files = Directory.GetFiles(@"C:\").ToList<string>();
+        private List<string> folders = Directory.GetDirectories(@"C:\").ToList<string>();
         public Form1()
         {
             InitializeComponent();
         }
 
-        private string[] files = Directory.GetFiles(@"C:\");
-        private string[] folders = Directory.GetDirectories(@"C:\");
 
         // critical section variables
         private Object fileCS = new Object();
@@ -157,18 +157,36 @@ namespace OS_lab_3_CS_UI
         {
             List<string> SearchedFiles = new List<string>();
 
+            string[] tempfiles = new string[files.Length];
+
+            //Clearing filepath
+            for (int i = 0; i < files.Length; i++)
+            {
+                int iLastPosOfBackSlash = 0;
+
+                for (int j = 0; j < files[i].Length; ++j)
+                {
+                    if (files[i][j] == '\\')
+                    {
+                        iLastPosOfBackSlash = j;
+                    }
+                }
+
+                tempfiles[i] = files[i].Remove(0, iLastPosOfBackSlash + 1);
+            }
+
             bool isAnyFilesEquals = false;
 
             if (sFileName[sFileName.Length - 1] == '*')
             {
-                for (int i = 0; i < files.Length; ++i)
+                for (int i = 0; i < tempfiles.Length; ++i)
                 {
                     bool isIdentity = true;
                     for (int j = 0; j < sFileName.Length; ++j)
                     {
                         if (sFileName[j] == '*')
                             break;
-                        if (sFileName[j] != files[i][j])
+                        if (sFileName[j] != tempfiles[i][j])
                         {
                             isIdentity = false;
                             break;
@@ -184,14 +202,14 @@ namespace OS_lab_3_CS_UI
 
             else
             {
-                for (int i = 0; i < files.Length; ++i)
+                for (int i = 0; i < tempfiles.Length; ++i)
                 {
-                    if (files[i].Length == sFileName.Length)
+                    if (tempfiles[i].Length == sFileName.Length)
                     {
                         bool isIdentity = true;
                         for (int j = 0; j < sFileName.Length; ++j)
                         {
-                            if (sFileName[j] != files[i][j])
+                            if (sFileName[j] != tempfiles[i][j])
                             {
                                 isIdentity = false;
                                 break;
@@ -227,19 +245,35 @@ namespace OS_lab_3_CS_UI
         private List<string> SearchFolders(string[] folders, string sFileName)
         {
             List<string> SearchedFolders = new List<string>();
+            string[] tempfolders = new string[folders.Length];
 
+            //Clearing filepath
+            for (int i = 0; i < folders.Length; i++)
+            {
+                int iLastPosOfBackSlash = 0;
+
+                for (int j = 0; j < folders[i].Length; ++j)
+                {
+                    if (folders[i][j] == '\\')
+                    {
+                        iLastPosOfBackSlash = j;
+                    }
+                }
+
+                tempfolders[i] = folders[i].Remove(0, iLastPosOfBackSlash + 1);
+            }
             bool isAnyFoldersEquals = false;
 
             if (sFileName[sFileName.Length - 1] == '*')
             {
-                for (int i = 0; i < folders.Length; ++i)
+                for (int i = 0; i < tempfolders.Length; ++i)
                 {
                     bool isIdentity = true;
                     for (int j = 0; j < sFileName.Length; ++j)
                     {
                         if (sFileName[j] == '*')
                             break;
-                        if (sFileName[j] != folders[i][j])
+                        if (sFileName[j] != tempfolders[i][j])
                         {
                             isIdentity = false;
                             break;
@@ -254,14 +288,14 @@ namespace OS_lab_3_CS_UI
             }
             else
             {
-                for (int i = 0; i < folders.Length; ++i)
+                for (int i = 0; i < tempfolders.Length; ++i)
                 {
-                    if (folders[i].Length == sFileName.Length)
+                    if (tempfolders[i].Length == sFileName.Length)
                     {
                         bool isIdentity = true;
                         for (int j = 0; j < sFileName.Length; ++j)
                         {
-                            if (sFileName[j] != folders[i][j])
+                            if (sFileName[j] != tempfolders[i][j])
                             {
                                 isIdentity = false;
                                 break;
@@ -293,14 +327,32 @@ namespace OS_lab_3_CS_UI
             return SearchedFolders;
         }
 
+        public void RecursivelySearch(string path, ref List<string> folders, ref List<string> files)
+        {
+            List<string> TempFiles = Directory.GetFiles(path).ToList<string>();
+            List<string> TempFolders = Directory.GetDirectories(path).ToList<string>();
+
+            foreach (var TempFolder in TempFolders)
+            {
+                RecursivelySearch(TempFolder, ref folders, ref files);
+                folders.Add(TempFolder);
+            }
+            foreach (var TempFile in TempFiles)
+            {
+                files.Add(TempFile);
+            }
+        }
         
         private void Button1_Click(object sender, System.EventArgs e)
         {
             SetButton1Enabled(false);
             progressBar1.Value = 0;
             progressBar1.Update();
-            files = Directory.GetFiles(textBox2.Text);
-            folders = Directory.GetDirectories(textBox2.Text);
+            files = new List<string>();
+            folders = new List<string>();
+
+            RecursivelySearch(textBox2.Text, ref folders, ref files);
+
             lock (fileCS)
             {
                 folderCS.WaitOne();
@@ -318,14 +370,14 @@ namespace OS_lab_3_CS_UI
                 sFileName = "*";
 
             // Clearing filepath from files strings
-            for (int i = 0; i < files.Length; ++i)
+            for (int i = 0; i < files.Count; ++i)
             {
                 files[i] = files[i].Remove(0, textBox2.Text.Length);
                 for (int j = 0; files[i][j] == '\\'; ++j)
                     files[i] = files[i].Remove(0, 1);
             }
             // Clearing filepath from folders strings
-            for (int i = 0; i < folders.Length; ++i)
+            for (int i = 0; i < folders.Count; ++i)
             {
                 folders[i] = folders[i].Remove(0, textBox2.Text.Length);
                 for (int j = 0; folders[i][j] == '\\'; ++j)
@@ -335,14 +387,14 @@ namespace OS_lab_3_CS_UI
             // Threads count
             int iCountOfFilesThreads = int.Parse(comboBox1.SelectedItem.ToString()) / 2;
             int iCountOfFoldersThreads = int.Parse(comboBox1.SelectedItem.ToString()) / 2;
-            while (folders.Length < iCountOfFoldersThreads)
+            while (folders.Count < iCountOfFoldersThreads)
                 --iCountOfFoldersThreads;
-            while (files.Length < iCountOfFilesThreads)
+            while (files.Count < iCountOfFilesThreads)
                 --iCountOfFilesThreads;
 
             // progressBar Max Value
 
-            progressBar1.Maximum = files.Length + folders.Length;
+            progressBar1.Maximum = files.Count + folders.Count;
             progressBar1.Update();
 
             T.Clear();
@@ -354,16 +406,18 @@ namespace OS_lab_3_CS_UI
                 sFilesWrite += comboBox1.SelectedItem.ToString() + "-";
                 sFilesWrite += i.ToString() + ".txt";
                 string[] folderstemp;
-                int iDec = folders.Length / iCountOfFoldersThreads;
-                if (folders.Length % iCountOfFoldersThreads != 0 && i == iCountOfFoldersThreads - 1)
+                int iDec = folders.Count / iCountOfFoldersThreads;
+                if (folders.Count % iCountOfFoldersThreads != 0 && i == iCountOfFoldersThreads - 1)
                 {
-                    folderstemp = new string[iDec + folders.Length % iCountOfFoldersThreads];
-                    Array.Copy(folders, i * iDec, folderstemp, 0, iDec + folders.Length % iCountOfFoldersThreads);
+                    folderstemp = new string[iDec + folders.Count % iCountOfFoldersThreads];
+                    folders.CopyTo(folderstemp);
+                    //Array.Copy(folders, i * iDec, folderstemp, 0, iDec + folders.Count % iCountOfFoldersThreads);
                 }
                 else
                 {
                     folderstemp = new string[iDec];
-                    Array.Copy(folders, i * iDec, folderstemp, 0, iDec);
+                    folders.CopyTo(folderstemp);
+                    //Array.Copy(folders, i * iDec, folderstemp, 0, iDec);
                 }
 
                 // Starting threads
@@ -379,16 +433,18 @@ namespace OS_lab_3_CS_UI
                 sFilesWrite += comboBox1.SelectedItem.ToString() + "-";
                 sFilesWrite += i.ToString() + ".txt";
                 string[] filestemp;
-                int iDec = files.Length / iCountOfFilesThreads;
-                if (files.Length % iCountOfFilesThreads != 0 && i == iCountOfFilesThreads - 1)
+                int iDec = files.Count / iCountOfFilesThreads;
+                if (files.Count % iCountOfFilesThreads != 0 && i == iCountOfFilesThreads - 1)
                 {
-                    filestemp = new string[iDec + files.Length % iCountOfFilesThreads];
-                    Array.Copy(files, i * iDec, filestemp, 0, iDec + files.Length % iCountOfFilesThreads);
+                    filestemp = new string[iDec + files.Count % iCountOfFilesThreads];
+                    files.CopyTo(filestemp);
+                    //Array.Copy(files, i * iDec, filestemp, 0, iDec + files.Count % iCountOfFilesThreads);
                 }
                 else
                 {
                     filestemp = new string[iDec];
-                    Array.Copy(files, i * iDec, filestemp, 0, iDec);
+                    files.CopyTo(filestemp);
+                    //Array.Copy(files, i * iDec, filestemp, 0, iDec);
                 }
 
                 // Starting threads
